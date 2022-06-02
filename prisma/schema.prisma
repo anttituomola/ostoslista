@@ -31,3 +31,8 @@ model Ingredient {
   reciperow Reciperow @relation(fields: [ReciperowId], references: [id])
   ReciperowId String
 }
+
+model test {
+  id String @id
+  name String
+}

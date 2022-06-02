@@ -1,14 +1,25 @@
-
+import prisma from "../prisma/prisma"
 import styles from '../styles/Home.module.css'
-import { getAllRecipes } from '../data/apiCalls'
+import { getRecipes} from '../data/getRecipes'
 
-const Home = () => {
+const Home = (props) => {
+  console.log(props)
   return (
     <div className={styles.container}>
       <h1>Ostoslistageneraattori</h1>
-      <button onClick={() => getAllRecipes()}>Get all recipes</button>
     </div>
   )
 }
 
 export default Home
+
+export async function getServerSideProps() {
+  let recipes = await getRecipes(prisma)
+  recipes = JSON.parse( JSON.stringify(recipes) )
+  return {
+    props: {
+      recipes
+    }
+  }
+}
+ 
