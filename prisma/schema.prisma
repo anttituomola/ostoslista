@@ -10,8 +10,24 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model recipes {
-  id String @id
-  name String
-  seasons Int[]
+model Recipes {
+  id         String      @id
+  name       String
+  seasons    Int[]
+  recipeRows Reciperow[]
+}
+
+model Reciperow {
+  id       String  @id
+  name     String
+  recipe   Recipes @relation(fields: [recipeId], references: [id])
+  recipeId String
+  ingredients Ingredient?
+}
+
+model Ingredient {
+  id       String  @id
+  name     String
+  reciperow Reciperow @relation(fields: [ReciperowId], references: [id])
+  ReciperowId String
 }
