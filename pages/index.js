@@ -2,11 +2,10 @@ import prisma from "../prisma/prisma"
 import styles from '../styles/Home.module.css'
 import { getIngredients, getRecipeRows, getRecipes } from "../data/hydrateData"
 import Link from "next/link"
-import { hydrateRedux } from "data/hydrateRedux"
 
 const Home = (props) => {
-  hydrateRedux(props.recipes, props.recipeRows, props.ingredients)
   console.log("Props from index:", props)
+
   return (
     <div className={styles.container}>
       <h1>Ostoslistageneraattori</h1>
