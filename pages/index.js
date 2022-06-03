@@ -17,7 +17,7 @@ const Home = (props) => {
               recipeName: recipe.name,
               id: recipe.id,
               recipeSeasons: recipe.seasons,
-            },
+            }
           }}>
             <h2>{recipe.name}</h2>
           </Link>

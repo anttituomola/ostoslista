@@ -18,13 +18,13 @@ model Recipes {
 }
 
 model Reciperow {
-  id              String      @id
-  name            String
-  amountPerPerson Float @default(0)
-  unit            String
-  recipe          Recipes     @relation(fields: [recipeId], references: [id])
-  recipeId        String
-  ingredients     Ingredient?
+  id             String      @id
+  name           String
+  amountPerPeson Float
+  unit           String
+  recipe         Recipes     @relation(fields: [recipeId], references: [id])
+  recipeId       String
+  ingredients    Ingredient?
 }
 
 model Ingredient {
