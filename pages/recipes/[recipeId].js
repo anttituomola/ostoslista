@@ -1,32 +1,26 @@
-import { getMathingRecipeRows, getMathingIngredients, getRecipes } from "data/hydrateData"
+import { getMathingRecipeRows, getMathingIngredients } from "data/hydrateData"
 import prisma from "/prisma/prisma"
 
 const portion = (props) => {
   console.log("Props from recipe: ", props)
+  const ingredientsList = props.ingredients.map(ingredient => (
+    <li key={ingredient.id}>
+      {ingredient.id} {ingredient.reciperow.amountPerPerson} {ingredient.reciperow.unit}
+    </li>
+  ))
+
   return (
     <div>
       <h1>{props.recipeName}</h1>
       <h3>ID: {props.recipeId}</h3>
+      {ingredientsList}
     </div>
   )
 }
 
 export default portion
 
-export async function getStaticPaths() {
-  const recipes = await getRecipes()
-  const paths = recipes.map(recipe => ({
-    params: {
-      recipeName: recipe.name,
-    },
-  }))
-  return {
-    paths,
-    fallback: false,
-  }
-}
-
-export async function getStaticProps(context) {
+export async function getServerSideProps(context) {
   // Get all recipeRows with matching recipeId
   let recipeRow = await getMathingRecipeRows(prisma, context.query.id)
   recipeRow = JSON.parse(JSON.stringify(recipeRow))
@@ -41,6 +35,8 @@ export async function getStaticProps(context) {
       recipeName: context.query.recipeName,
       recipeId: context.query.id,
       recipeSeasons: context.query.recipeSeasons,
+      recipeRow,
+      ingredients
     }
   }
 }
