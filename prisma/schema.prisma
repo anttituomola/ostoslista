@@ -18,21 +18,18 @@ model Recipes {
 }
 
 model Reciperow {
-  id       String  @id
-  name     String
-  recipe   Recipes @relation(fields: [recipeId], references: [id])
-  recipeId String
-  ingredients Ingredient?
+  id             String      @id
+  name           String
+  amountPerPeson Float
+  unit           String
+  recipe         Recipes     @relation(fields: [recipeId], references: [id])
+  recipeId       String
+  ingredients    Ingredient?
 }
 
 model Ingredient {
-  id       String  @id
-  name     String
-  reciperow Reciperow @relation(fields: [ReciperowId], references: [id])
-  ReciperowId String
-}
-
-model test {
-  id String @id
-  name String
+  id          String     @id
+  name        String
+  reciperow   Reciperow? @relation(fields: [ReciperowId], references: [id])
+  ReciperowId String?    @unique
 }

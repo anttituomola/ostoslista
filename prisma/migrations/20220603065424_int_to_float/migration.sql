@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE "Reciperow" ALTER COLUMN "amountPerPeson" SET DATA TYPE DOUBLE PRECISION;
