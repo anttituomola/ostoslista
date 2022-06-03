@@ -20,7 +20,7 @@ const portion = (props) => {
 
 export default portion
 
-export async function getServerSideProps(context) {
+export async function getStaticProps(context) {
   // Get all recipeRows with matching recipeId
   let recipeRow = await getMathingRecipeRows(prisma, context.query.id)
   recipeRow = JSON.parse(JSON.stringify(recipeRow))

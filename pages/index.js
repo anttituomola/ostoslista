@@ -28,7 +28,7 @@ const Home = (props) => {
 
 export default Home
 
-export async function getServerSideProps() {
+export async function getStaticProps() {
   let recipes = await getRecipes(prisma)
   let recipeRows = await getRecipeRows(prisma)
   let ingredients = await getIngredients(prisma)
