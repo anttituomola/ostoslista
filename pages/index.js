@@ -4,22 +4,35 @@ import { getIngredients, getRecipeRows, getRecipes } from "../data/hydrateData"
 import Link from "next/link"
 import { useRouter } from 'next/router'
 import Recipe from 'components/Recipe'
+import RecipeOptions from 'components/RecipeOptions'
+import PortionPlaceholders from 'components/PortionPlaceholders'
+import { useState } from 'react'
 
 const Home = (props) => {
   const router = useRouter()
-  console.log("Props from index:", props)
+  const [numberOfDiners, setNumberOfDiners] = useState(1)
+  const [numberOfDays, setNumberOfDays] = useState(3)
+  const [portionsPerDay, setPortionsPerDay] = useState(2)
+  const [currentPlan, setCurrentPlan] = useState(["Lasagne", "Kevätrullat", "Kulli"])
 
   return (
     <div className={styles.container}>
       <h1>Ostoslistageneraattori</h1>
-      <div className={styles.recipePlaceholder} onClick={() => router.push("/allRecipes")}>
-        <h2>Select portion</h2>
-      </div>
-      {props.recipes.map(recipe => (
-        <div key={recipe.id}>
-          <Recipe recipe={recipe} />
-        </div>
-      ))}
+      <PortionPlaceholders 
+        numberOfDiners={numberOfDiners}
+        numberOfDays={numberOfDays}
+        portionsPerDay={portionsPerDay}
+        currentPlan={currentPlan}
+        setCurrentPlan={setCurrentPlan}
+      />
+      <RecipeOptions 
+        numberOfDiners={numberOfDiners}
+        numberOfDays={numberOfDays}
+        portionsPerDay={portionsPerDay}
+        setNumberOfDiners={setNumberOfDiners}
+        setNumberOfDays={setNumberOfDays}
+        setPortionsPerDay={setPortionsPerDay}
+      />
     </div>
   )
 }
