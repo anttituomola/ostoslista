@@ -29,31 +29,7 @@ const Home = (props) => {
 
 export default Home
 
-export const getServerSideProps = wrapper.getServerSideProps(store => async (ctx) => {
-  let recipes = await getRecipes(prisma)
-  let recipeRows = await getRecipeRows(prisma)
-  let ingredients = await getIngredients(prisma)
-
-  recipes = await JSON.parse(JSON.stringify(recipes))
-  recipeRows = await JSON.parse(JSON.stringify(recipeRows))
-  ingredients = await JSON.parse(JSON.stringify(ingredients))
-
-  store.dispatch(recipeActions.hydrateRecipes({
-    recipes,
-    recipeRows,
-    ingredients,
-  }))
-
-  return {
-    props: {
-      recipes,
-      recipeRows,
-      ingredients
-    }
-  }  
-})
-
-/* export async function getServerSideProps() {
+export async function getStaticProps() {
   let recipes = await getRecipes(prisma)
   let recipeRows = await getRecipeRows(prisma)
   let ingredients = await getIngredients(prisma)
@@ -69,4 +45,4 @@ export const getServerSideProps = wrapper.getServerSideProps(store => async (ctx
       ingredients
     }
   }
-} */
+}
