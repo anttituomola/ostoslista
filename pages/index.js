@@ -1,23 +1,23 @@
-/* import prisma from "../prisma/prisma"
- */import styles from '../styles/Home.module.css'
+import prisma from 'prisma/prisma'
+import styles from '../styles/Home.module.css'
 import { getIngredients, getRecipeRows, getRecipes } from "../data/hydrateData"
 import Link from "next/link"
-import { wrapper } from "store"
-import { recipeActions } from 'data/recipeSlice'
-import { useSelector } from 'react-redux'
 
 const Home = (props) => {
   console.log("Props from index:", props)
-  const recipesFromRedux = useSelector(state => state.recipes.recipes)
-  console.log("Recipes from Redux", recipesFromRedux)
 
   return (
     <div className={styles.container}>
       <h1>Ostoslistageneraattori</h1>
-      {recipesFromRedux.map(recipe => (
+      {props.recipes.map(recipe => (
         <div key={recipe.id}>
           <Link href={{
-            pathname: `/recipes/${recipe.id}`,
+            pathname: `/recipes/${recipe.name}`,
+            query: {
+              id: recipe.id,
+              recipeName: recipe.name,
+              recipeSeasons: recipe.seasons,
+            }
           }}>
             <h2>{recipe.name}</h2>
           </Link>
@@ -29,7 +29,7 @@ const Home = (props) => {
 
 export default Home
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
   let recipes = await getRecipes(prisma)
   let recipeRows = await getRecipeRows(prisma)
   let ingredients = await getIngredients(prisma)

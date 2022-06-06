@@ -5,7 +5,7 @@ const portion = (props) => {
   console.log("Props from recipe: ", props)
   return (
     <div>
-      <h1>Recipe: {router.asPath.id}</h1>
+      <h1>Recipe: {props.recipeName}</h1>
       <h3>ID: {props.recipeId}</h3>
     </div>
   )
@@ -13,28 +13,15 @@ const portion = (props) => {
 
 export default portion
 
-export async function getStaticPaths() {
-  const recipes = await getRecipes()
-  const paths = recipes.map(recipe => ({
-    params: {
-      recipeName: recipe.name,
-    },
-  }))
-  return {
-    paths,
-    fallback: false,
-  }
-}
-
-export async function getStaticProps(context) {
+export async function getServerSideProps(context) {
   // Get all recipeRows with matching recipeId
   let recipeRow = await getMathingRecipeRows(prisma, context.query.id)
-  recipeRow = JSON.parse(JSON.stringify(recipeRow))
+  recipeRow = await JSON.parse(JSON.stringify(recipeRow))
 
   // Get ingredients for the portion
   const allRecipeRows = await recipeRow.map(row => row.id)
   let ingredients = await getMathingIngredients(prisma, ...allRecipeRows)
-  ingredients = JSON.parse(JSON.stringify(ingredients))
+  ingredients = await JSON.parse(JSON.stringify(ingredients))
 
   return {
     props: {
