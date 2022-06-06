@@ -17,12 +17,7 @@ const Home = (props) => {
       {recipesFromRedux.map(recipe => (
         <div key={recipe.id}>
           <Link href={{
-            pathname: `/recipes/${recipe.name}`,
-            query: {
-              recipeName: recipe.name,
-              id: recipe.id,
-              recipeSeasons: recipe.seasons,
-            }
+            pathname: `/recipes/${recipe.id}`,
           }}>
             <h2>{recipe.name}</h2>
           </Link>
