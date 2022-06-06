@@ -11,19 +11,17 @@ const PortionPlaceholders = (props) => {
 
   const closeModal = () => {
     setModal(false)
-    console.log("Modal closed")
   }
 
   const selectPortion = (portion) => {
     setModal(true)
     setModalPortion(portion)
-    console.log("modal portion id: ", portion.id)
   }
 
 
   // Divide portions into days
   const chunk = (arr, size) =>
-    Array.from({ length: Math.ceil(arr.length / size) }, (v, i) =>
+    Array.from({ length: Math.ceil(arr.length / size) }, (v, i) => 
       arr.slice(i * size, i * size + size)
     )
 
@@ -31,20 +29,20 @@ const PortionPlaceholders = (props) => {
   console.log(chunks)
 
   const days = Array.from({ length: numberOfDays }, (x, i) => {
-    return <Day key={uuid()} portions={chunks[i]} weekday={dayjs().add(i, "day").format("dddd")} 
-    selectPortion={selectPortion}
+    return <Day key={uuid()} portions={chunks[i]} weekday={dayjs().add(i, "day").format("dddd")}
+      selectPortion={selectPortion}
     />
   })
 
   return (
     <div id="dayContainer">
       {days}
-      <Modal 
-        showModal={showModal} 
-        closeModal={closeModal} 
-        selectPortion={selectPortion} 
+      <Modal
+        showModal={showModal}
+        closeModal={closeModal}
+        selectPortion={selectPortion}
         portion={modalPortion}
-        />
+      />
     </div>
   )
 }
