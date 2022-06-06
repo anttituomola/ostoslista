@@ -1,13 +1,12 @@
 import prisma from 'prisma/prisma'
 import styles from '../styles/Home.module.css'
 import { getIngredients, getRecipeRows, getRecipes } from "../data/hydrateData"
-import { useRouter } from 'next/router'
 import RecipeOptions from 'components/RecipeOptions'
 import PortionPlaceholders from 'components/PortionPlaceholders'
 import { useState } from 'react'
 
 const Home = (props) => {
-  const router = useRouter()
+  console.log(props)
   const [numberOfDiners, setNumberOfDiners] = useState(1)
   const [numberOfDays, setNumberOfDays] = useState(3)
   const [portionsPerDay, setPortionsPerDay] = useState(2)

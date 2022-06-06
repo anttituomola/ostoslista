@@ -3,7 +3,7 @@ import Portion from "./Portion"
 
 const Day = (props) => {
     const portions = props.portions ? props.portions.map(portion => {
-        return <Portion key={uuid()} portion={portion} />
+        return <Portion key={uuid()} day={props.weekday} portion={portion} selectPortion={props.selectPortion}/>
     }) : ""
     
     if (props.portions) {

@@ -1,0 +1,7 @@
+.button {
+    padding: 1.5em;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    max-width: max-content;
+    margin: 1em;
+}
