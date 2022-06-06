@@ -1,13 +1,20 @@
 import { v4 as uuid } from 'uuid'
 import dayjs from 'dayjs'
 import Day from './Day'
-import { useState } from "react"
+import { useState, forwardRef, useImperativeHandle } from "react"
 import Modal from "./Modal"
 
-const PortionPlaceholders = (props) => {
+const PortionPlaceholders = forwardRef((props, ref) => {
   const { numberOfDiners, numberOfDays, portionsPerDay, currentPlan } = props
   const [showModal, setModal] = useState(false)
   const [modalPortion, setModalPortion] = useState({})
+
+  useImperativeHandle(ref, () => ({
+    closeModal: () => {
+      console.log("MODAL CLOSING")
+      setModal(false)
+    }
+  }))
 
   const closeModal = () => {
     setModal(false)
@@ -21,7 +28,7 @@ const PortionPlaceholders = (props) => {
 
   // Divide portions into days
   const chunk = (arr, size) =>
-    Array.from({ length: Math.ceil(arr.length / size) }, (v, i) => 
+    Array.from({ length: Math.ceil(arr.length / size) }, (v, i) =>
       arr.slice(i * size, i * size + size)
     )
 
@@ -42,9 +49,14 @@ const PortionPlaceholders = (props) => {
         closeModal={closeModal}
         selectPortion={selectPortion}
         portion={modalPortion}
+        recipes={props.recipes}
+        changeRecipe={props.changeRecipe}
       />
     </div>
   )
 }
+)
 
 export default PortionPlaceholders
+
+PortionPlaceholders.displayName = 'PortionPlaceholders'

@@ -3,9 +3,11 @@ import styles from '../styles/Home.module.css'
 import { getIngredients, getRecipeRows, getRecipes } from "../data/hydrateData"
 import RecipeOptions from 'components/RecipeOptions'
 import PortionPlaceholders from 'components/PortionPlaceholders'
-import { useState } from 'react'
+import React, { useState, useRef } from 'react'
 
 const Home = (props) => {
+  const modalRef = useRef(null)
+
   console.log(props)
   const [numberOfDiners, setNumberOfDiners] = useState(1)
   const [numberOfDays, setNumberOfDays] = useState(3)
@@ -16,9 +18,21 @@ const Home = (props) => {
     const portionsNeeded = numberOfDays * portionsPerDay
     while (portionsNeeded > currentPlan.length) {
       const recipe = props.recipes[Math.floor(Math.random() * props.recipes.length)]
+      // We need the index to change the correct portion in modal
+      const recipeWithIndex = { ...recipe, index: currentPlan.length }
       // add recipe to currentPlan
-      currentPlan.push(recipe)
+      currentPlan.push(recipeWithIndex)
     }
+  }
+
+  const changeRecipe = (index, recipe) => {
+    let newPlan = [...currentPlan]
+    newPlan.splice(index, 1, recipe)
+    setCurrentPlan(newPlan)
+    // HOW CAN IT BE SO FUCKING DIFFICULT TO UPDATE THE STATE OF A CHILD COMPONENT?
+    // https://stackoverflow.com/questions/66664209/how-can-i-use-forwardref-in-react
+    console.log("REF: ", modalRef)
+    modalRef.current.closeModal()
   }
 
   buildPlan()
@@ -33,6 +47,9 @@ const Home = (props) => {
         portionsPerDay={portionsPerDay}
         currentPlan={currentPlan}
         setCurrentPlan={setCurrentPlan}
+        recipes={props.recipes}
+        changeRecipe={changeRecipe}
+        ref={modalRef}
       />
       <RecipeOptions
         numberOfDiners={numberOfDiners}

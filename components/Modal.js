@@ -47,6 +47,13 @@ const Modal = (props) => {
             <div className={styles.modalContent} ref={modalRef}>
                 <span className={styles.close} onClick={props.closeModal}>X</span>
                 <h1>{props.portion.name}</h1>
+                <p>Index: {props.portion.index}</p>
+                <h2>Pick a new recipe:</h2>
+                {props.recipes.map((recipe, index) => {
+                    return (
+                        <button key={index} onClick={() => props.changeRecipe(props.portion.index, recipe)}>{recipe.name}</button>
+                    )
+                })}
             </div>
         </div>
     )
