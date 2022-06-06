@@ -1,45 +1,53 @@
-import { getMathingRecipeRows, getMathingIngredients, getRecipes } from "data/hydrateData"
-import prisma from "/prisma/prisma"
+import { getRecipe } from "data/hydrateData"
+import prisma from "prisma/prisma"
 
-const portion = (props) => {
-  console.log("Props from recipe: ", props)
+export default function UserProfile({ recipeId, recipe, ingredients }) {
+  console.log("RecipeId:", recipeId)
+  console.log("Recipe: ", recipe)
+  console.log("Ingredients: ", ingredients)
 
-  const ingredients = props.ingredients.map(ingredient => {
+  const ingredientsList = ingredients.map(ingredient => {
     return (
-      <div key={ingredient.id}>
-        <p>{ingredient.id}: {ingredient.reciperow.amountPerPerson} {ingredient.reciperow.unit}</p>
-      </div>
+      <li key={ingredient.id}>
+        {ingredient.id}: {ingredient.reciperow.amountPerPerson} {ingredient.reciperow.unit}
+      </li>
     )
   })
 
-  return (
-    <div>
-      <h1>Recipe: {props.recipeName}</h1>
-      <h3>ID: {props.recipeId}</h3>
-      {ingredients}
-    </div>
-  )
+  return <>
+    <h2>{recipe[0].name}</h2>
+      {ingredientsList}
+  
+  </>
 }
 
-export default portion
-
-export async function getServerSideProps(context) {
-  // Get all recipeRows with matching recipeId
-  let recipeRow = await getMathingRecipeRows(prisma, context.query.id)
-  recipeRow = await JSON.parse(JSON.stringify(recipeRow))
-
-  // Get ingredients for the portion
-  const allRecipeRows = await recipeRow.map(row => row.id)
-  let ingredients = await getMathingIngredients(prisma, ...allRecipeRows)
-  ingredients = await JSON.parse(JSON.stringify(ingredients))
+export async function getServerSideProps({ params }) {
+  const recipe = await getRecipe(prisma, params.recipeId)
+  const recipeRows = await prisma.reciperow.findMany({
+    where: {
+      recipeId: params.recipeId
+    }
+  })
+  const ingredients = await prisma.ingredient.findMany({
+    where: {
+      ReciperowId: { in: recipeRows.map(row => row.id) }
+    },
+    select: {
+      id: true,
+      reciperow: {
+        select: {
+          amountPerPerson: true,
+          unit: true,
+        }
+      }
+    }
+  })
 
   return {
     props: {
-      recipeName: context.query.recipeName,
-      recipeId: context.query.id,
-      recipeSeasons: context.query.recipeSeasons,
-      recipeRow,
+      recipeId: params.recipeId,
+      recipe,
       ingredients
-    }
+    },
   }
 }

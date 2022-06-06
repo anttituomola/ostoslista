@@ -13,6 +13,16 @@ export const getIngredients = async (prisma) => {
     return allIngredients
 }
 
+// Get a single recipe with matching id
+export const getRecipe = async (prisma, recipeId) => {
+    const recipe = await prisma.recipes.findMany({
+        where: {
+            id: recipeId,
+        }
+    })
+    return recipe
+}
+
 // Get all recipeRows with matching recipeId
 export const getMathingRecipeRows = async (prisma, recipeId) => {
     const recipeRow = await prisma.reciperow.findMany({

@@ -3,6 +3,7 @@ import styles from '../styles/Home.module.css'
 import { getIngredients, getRecipeRows, getRecipes } from "../data/hydrateData"
 import Link from "next/link"
 import { useRouter } from 'next/router'
+import Recipe from 'components/Recipe'
 
 const Home = (props) => {
   const router = useRouter()
@@ -16,16 +17,7 @@ const Home = (props) => {
       </div>
       {props.recipes.map(recipe => (
         <div key={recipe.id}>
-          <Link href={{
-            pathname: `/recipes/${recipe.name}`,
-            query: {
-              id: recipe.id,
-              recipeName: recipe.name,
-              recipeSeasons: recipe.seasons,
-            }
-          }}>
-            <h2>{recipe.name}</h2>
-          </Link>
+          <Recipe recipe={recipe} />
         </div>
       ))}
     </div>
