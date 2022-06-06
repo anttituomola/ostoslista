@@ -3,10 +3,20 @@ import prisma from "/prisma/prisma"
 
 const portion = (props) => {
   console.log("Props from recipe: ", props)
+
+  const ingredients = props.ingredients.map(ingredient => {
+    return (
+      <div key={ingredient.id}>
+        <p>{ingredient.id}: {ingredient.reciperow.amountPerPerson} {ingredient.reciperow.unit}</p>
+      </div>
+    )
+  })
+
   return (
     <div>
       <h1>Recipe: {props.recipeName}</h1>
       <h3>ID: {props.recipeId}</h3>
+      {ingredients}
     </div>
   )
 }
@@ -28,6 +38,8 @@ export async function getServerSideProps(context) {
       recipeName: context.query.recipeName,
       recipeId: context.query.id,
       recipeSeasons: context.query.recipeSeasons,
+      recipeRow,
+      ingredients
     }
   }
 }

@@ -2,6 +2,13 @@
   padding: 0 2rem;
 }
 
+.recipePlaceholder {
+  padding: 1em;
+  border: 1px solid #ccc;
+  border-radius: 1em;
+  max-width: fit-content;
+}
+
 .main {
   min-height: 100vh;
   padding: 4rem 0;
