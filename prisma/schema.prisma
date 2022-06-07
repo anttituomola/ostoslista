@@ -14,22 +14,24 @@ model Recipes {
   id         String      @id
   name       String
   seasons    Int[]
-  recipeRows Reciperow[]
+  recipeRows Reciperows[]
 }
 
-model Reciperow {
-  id             String      @id
-  name           String
-  amountPerPeson Float
-  unit           String
-  recipe         Recipes     @relation(fields: [recipeId], references: [id])
-  recipeId       String
-  ingredients    Ingredient?
+model Reciperows {
+  id              String      @id
+  name            String
+  amountPerPerson Float
+  unit            String
+  recipe          Recipes     @relation(fields: [recipeId], references: [id])
+  recipeId        String
+  ingredients     Ingredients?
+	@@map("Reciperow")
 }
 
-model Ingredient {
+model Ingredients {
   id          String     @id
   name        String
-  reciperow   Reciperow? @relation(fields: [ReciperowId], references: [id])
+  reciperow   Reciperows? @relation(fields: [ReciperowId], references: [id])
   ReciperowId String?    @unique
+	@@map("Ingredient")
 }

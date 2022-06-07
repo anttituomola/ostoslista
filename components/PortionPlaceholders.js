@@ -11,7 +11,6 @@ const PortionPlaceholders = forwardRef((props, ref) => {
 
   useImperativeHandle(ref, () => ({
     closeModal: () => {
-      console.log("MODAL CLOSING")
       setModal(false)
     }
   }))
@@ -33,7 +32,6 @@ const PortionPlaceholders = forwardRef((props, ref) => {
     )
 
   const chunks = chunk(currentPlan, portionsPerDay)
-  console.log(chunks)
 
   const days = Array.from({ length: numberOfDays }, (x, i) => {
     return <Day key={uuid()} portions={chunks[i]} weekday={dayjs().add(i, "day").format("dddd")}

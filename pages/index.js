@@ -8,7 +8,6 @@ import React, { useState, useRef } from 'react'
 const Home = (props) => {
   const modalRef = useRef(null)
 
-  console.log(props)
   const [numberOfDiners, setNumberOfDiners] = useState(1)
   const [numberOfDays, setNumberOfDays] = useState(3)
   const [portionsPerDay, setPortionsPerDay] = useState(2)
@@ -31,7 +30,6 @@ const Home = (props) => {
     setCurrentPlan(newPlan)
     // HOW CAN IT BE SO FUCKING DIFFICULT TO UPDATE THE STATE OF A CHILD COMPONENT?
     // https://stackoverflow.com/questions/66664209/how-can-i-use-forwardref-in-react
-    console.log("REF: ", modalRef)
     modalRef.current.closeModal()
   }
 
