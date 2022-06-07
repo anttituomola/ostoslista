@@ -25,13 +25,35 @@ const RecipeData = () => {
             .then((res) => {
                 console.log(res)
                 setRecipeName('')
+                setSelectedMonths([])
             })
             .catch((err) => {
                 console.log(err)
             })
     }
 
-    
+    const monthSelector = (month) => {
+        if (selectedMonths.includes(month)) {
+            setSelectedMonths(selectedMonths.filter((m) => m !== month))
+        } else {
+            setSelectedMonths([...selectedMonths, month])
+        }
+    }
+
+    // Fill the missing months between the first and last month
+    if (selectedMonths.length === 2) {
+        const firstMonth = Math.min(...selectedMonths)
+        const lastMonth = Math.max(...selectedMonths)
+        const monthToAdd = firstMonth + 1
+        if (lastMonth - firstMonth !== 1) {
+            while (monthToAdd < lastMonth) {
+                selectedMonths.push(monthToAdd)
+                monthToAdd++
+            }
+
+            setSelectedMonths(selectedMonths.sort((a, b) => a - b))
+        }
+    }
 
     return (
         <div>
@@ -44,7 +66,8 @@ const RecipeData = () => {
             <div>
                 <h3>Seasons</h3>
                 {allMonthNumbers.map(month => (
-                        <button key={month} className={styles.seasonButton}>{month}</button>
+                    <button key={month} className={selectedMonths.includes(month) ? styles.selected : styles.seasonButton} 
+                    onClick={() => monthSelector(month)}>{month}</button>
                 ))}
             </div>
             <button onClick={saveRecipe}>Save Recipe</button>
