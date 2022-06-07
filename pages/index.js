@@ -3,7 +3,7 @@ import styles from '../styles/Home.module.css'
 import { getIngredients, getRecipeRows, getRecipes } from "../data/hydrateData"
 import RecipeOptions from 'components/RecipeOptions'
 import PortionPlaceholders from 'components/PortionPlaceholders'
-import React, { useState, useRef } from 'react'
+import { useState, useRef } from 'react'
 
 const Home = (props) => {
   const modalRef = useRef(null)
@@ -22,19 +22,17 @@ const Home = (props) => {
       // add recipe to currentPlan
       currentPlan.push(recipeWithIndex)
     }
+    console.log(currentPlan)
   }
 
   const changeRecipe = (index, recipe) => {
     let newPlan = [...currentPlan]
     newPlan.splice(index, 1, recipe)
     setCurrentPlan(newPlan)
-    // HOW CAN IT BE SO FUCKING DIFFICULT TO UPDATE THE STATE OF A CHILD COMPONENT?
-    // https://stackoverflow.com/questions/66664209/how-can-i-use-forwardref-in-react
     modalRef.current.closeModal()
   }
 
   buildPlan()
-  console.log(currentPlan)
 
   return (
     <div className={styles.container}>
