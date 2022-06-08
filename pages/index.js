@@ -22,7 +22,6 @@ const Home = (props) => {
       // add recipe to currentPlan
       currentPlan.push(recipeWithIndex)
     }
-    console.log(currentPlan)
   }
 
   const changeRecipe = (index, recipe) => {

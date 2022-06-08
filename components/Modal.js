@@ -2,7 +2,6 @@ import { useEffect, useRef } from 'react'
 import styles from "styles/Modal.module.css"
 
 const Modal = (props) => {
-    console.log(props)
     const modalRef = useRef(null)
     useOnClickOutside(modalRef, () => props.closeModal());
     function useOnClickOutside(ref, handler) {
@@ -50,9 +49,11 @@ const Modal = (props) => {
                 <h1>{props.portion.name}</h1>
                 <h2>Ingredients</h2>
                 {props.recipeRows.map(row => {
+                    const neededAmount = row.amountPerPerson * props.numberOfDiners
+                    const roundedAmount = +neededAmount.toFixed(2)
                     return (
                         <div key={row.ingredient}>
-                            <p>{row.name}: {row.amountPerPerson}, {row.unit}</p>
+                            <p>{row.name}: {roundedAmount} {row.unit}</p>
                         </div>
                     )
                 })}

@@ -5,7 +5,6 @@ import { useState, forwardRef, useImperativeHandle } from "react"
 import Modal from "./Modal"
 
 const PortionPlaceholders = forwardRef((props, ref) => {
-  console.log(props)
   const { numberOfDiners, numberOfDays, portionsPerDay, currentPlan } = props
   const [showModal, setModal] = useState(false)
   const [modalPortion, setModalPortion] = useState({})
@@ -51,6 +50,7 @@ const PortionPlaceholders = forwardRef((props, ref) => {
         recipes={props.recipes}
         recipeRows={props.recipeRows.filter(row => row.recipeId === modalPortion.id)}
         changeRecipe={props.changeRecipe}
+        numberOfDiners={numberOfDiners}
       />
     </div>
   )
