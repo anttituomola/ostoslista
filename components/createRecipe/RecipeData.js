@@ -1,8 +1,10 @@
 import { v4 as uuid } from 'uuid'
 import { useState } from 'react'
 import styles from "/styles/AddRecipe.module.css"
+import { useRouter } from 'next/router'
 
 const RecipeData = () => {
+    const router = useRouter()
     const [recipeName, setRecipeName] = useState('')
     const [selectedMonths, setSelectedMonths] = useState([])
     const allMonthNumbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
@@ -26,6 +28,13 @@ const RecipeData = () => {
                 console.log(res)
                 setRecipeName('')
                 setSelectedMonths([])
+                router.push({
+                    pathname: "/admin/createRecipeRow",
+                    query: {
+                        recipeId: recipe.id,
+                        recipeName: recipe.name,
+                    },
+                })
             })
             .catch((err) => {
                 console.log(err)

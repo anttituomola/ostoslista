@@ -5,7 +5,6 @@ const createRecipe = () => {
   return (
     <>
       <RecipeData />
-      <RecipeRow />
     </>
   )
 }
