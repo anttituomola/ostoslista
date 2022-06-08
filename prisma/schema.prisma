@@ -11,7 +11,7 @@ datasource db {
 }
 
 model Recipes {
-  id         String      @id
+  id         String       @id
   name       String
   seasons    Int[]
   recipeRows Reciperows[]
@@ -24,14 +24,12 @@ model Reciperows {
   unit            String
   recipe          Recipes     @relation(fields: [recipeId], references: [id])
   recipeId        String
-  ingredients     Ingredients?
-	@@map("Reciperow")
+  ingredients     Ingredients @relation(fields: [ingredientId], references: [id])
+  ingredientId    String      @unique
 }
 
 model Ingredients {
-  id          String     @id
-  name        String
-  reciperow   Reciperows? @relation(fields: [ReciperowId], references: [id])
-  ReciperowId String?    @unique
-	@@map("Ingredient")
+  id         String       @id
+  name       String
+  reciperows Reciperows[]
 }

@@ -3,7 +3,7 @@ import prisma from "prisma/prisma"
 const addRecipe = async (req, res) => {
     if (req.method === "POST") {
         try {
-            const { id, amountPerPerson, name, unit, recipeId } = req.body
+            const { id, amountPerPerson, name, unit, recipeId, ingredientId } = req.body
             const recipeRow = await prisma.reciperows.create({
                 data: {
                     id,
@@ -13,6 +13,11 @@ const addRecipe = async (req, res) => {
                     recipe: {
                         connect: {
                             id: recipeId
+                        }
+                    },
+                    ingredients: {
+                        connect: {
+                            id: ingredientId
                         }
                     }
                 }

@@ -28,49 +28,67 @@ const AddRecipeRow = () => {
             name: ingredientInput,
             unit: measureUnit,
             recipeId: router.query.recipeId,
-            // ingredients?
+            ingredientId: ingredient.id,
         }
-        
-        fetch("/api/addRecipeRow", {
+
+
+        fetch("/api/addIngredient", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify(recipeRow),
+            body: JSON.stringify(ingredient),
         })
             .then((res) => {
                 console.log(res)
             })
             .catch((err) => {
                 console.log(err)
+            })
+
+            .then(() => {
+                fetch("/api/addRecipeRow", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(recipeRow),
+                })
+                    .then((res) => {
+                        console.log(res)
+                    })
+                    .catch((err) => {
+                        console.log(err)
+                    }
+                    )
             }
-        )
+            )
     }
 
 
-return (
-    <>
-    <h1>Add ingredients for {router.query.recipeName}</h1>
-        <div>
-            <span>Ingredient</span>
-            <input type="text" onChange={(event) => setIngredient(event.target.value)} />
-        </div>
-        <div>
-            <span>Amount per person</span>
-            <input type="number" onChange={(event) => setAmountPerPerson(event.target.value)} />
-        </div>
-        <div>
-            <span>Unit</span>
-            {measureUnits.map(unit => <button
-                onClick={() => unitSelector(unit)}
-                key={unit}
-                className={measureUnit === unit ? styles.selected : styles.seasonButton}>
-                {unit}
-            </button>)}
-        </div>
-        <button onClick={() => saveIngredients()}>Save ingredient</button>
-    </>
-)
-}
+        return (
+            <>
+                <h1>Add ingredients for {router.query.recipeName}</h1>
+                <div>
+                    <span>Ingredient</span>
+                    <input type="text" onChange={(event) => setIngredient(event.target.value)} />
+                </div>
+                <div>
+                    <span>Amount per person</span>
+                    <input type="number" onChange={(event) => setAmountPerPerson(event.target.value)} />
+                </div>
+                <div>
+                    <span>Unit</span>
+                    {measureUnits.map(unit => <button
+                        onClick={() => unitSelector(unit)}
+                        key={unit}
+                        className={measureUnit === unit ? styles.selected : styles.seasonButton}>
+                        {unit}
+                    </button>)}
+                </div>
+                <button onClick={() => saveIngredients()}>Save ingredient</button>
+            </>
+        )
+    }
 
-export default AddRecipeRow
+    export default AddRecipeRow
