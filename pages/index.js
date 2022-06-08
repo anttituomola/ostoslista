@@ -44,6 +44,7 @@ const Home = (props) => {
         currentPlan={currentPlan}
         setCurrentPlan={setCurrentPlan}
         recipes={props.recipes}
+        recipeRows={props.recipeRows}
         changeRecipe={changeRecipe}
         ref={modalRef}
       />
