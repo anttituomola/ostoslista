@@ -3,8 +3,9 @@ import { useState } from "react"
 import styles from "/styles/AddRecipe.module.css"
 import { v4 as uuid } from "uuid"
 import { useRouter } from "next/router"
+import IngredientInput from "./IngredientInput"
 
-const AddRecipeRow = () => {
+const AddRecipeRow = ({ ingredientSuggestionList }) => {
     const router = useRouter()
     const [addedIngredients, setAddedIngredients] = useState([])
     const [amountPerPerson, setAmountPerPerson] = useState()
@@ -13,8 +14,6 @@ const AddRecipeRow = () => {
     const measureUnits = ["g", "kg", "ml", "l", "kpl", "puntti",]
     const [selectedMonths, setSelectedMonths] = useState([])
     const allMonthNumbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
-
-    console.log(router.query)
 
     const unitSelector = (unit) => {
         setMeasureUnit(unit)
@@ -109,7 +108,8 @@ const AddRecipeRow = () => {
             <h1>Add ingredients for {router.query.recipeName}</h1>
             <div>
                 <span>Ingredient</span>
-                <input type="text" onChange={(event) => setIngredient(event.target.value)} value={ingredientInput} />
+{/*                 <input type="text" onChange={(event) => setIngredient(event.target.value)} value={ingredientInput} />
+ */}                <IngredientInput ingredientSuggestionList={ingredientSuggestionList} />
             </div>
             <div>
                 <span>Amount per person</span>

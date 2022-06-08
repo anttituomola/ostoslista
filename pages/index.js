@@ -4,6 +4,7 @@ import { getIngredients, getRecipeRows, getRecipes } from "../data/hydrateData"
 import RecipeOptions from 'components/RecipeOptions'
 import PortionPlaceholders from 'components/PortionPlaceholders'
 import { useState, useRef } from 'react'
+import generateIngredientSuggestionList from 'util/generateIngredientSuggestionList'
 
 const Home = (props) => {
   const modalRef = useRef(null)
