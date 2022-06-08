@@ -31,5 +31,6 @@ model Reciperows {
 model Ingredients {
   id         String       @id
   name       String
+  seasons    Int[]
   reciperows Reciperows[]
 }

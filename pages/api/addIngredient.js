@@ -3,11 +3,12 @@ import prisma from "prisma/prisma"
 const addIngredient = async (req, res) => {
     if (req.method === "POST") {
         try {
-            const { id, name } = req.body
+            const { id, name, seasons } = req.body
             const ingredient = await prisma.ingredients.create({
                 data: {
                     id,
                     name,
+                    seasons,
                     }
             })
             res.statusCode = 200
